@@ -758,13 +758,13 @@
       <span class="key-progress__count">${l(n)} ${s}/${o}</span>
     </p>
   `}function Nt(e){return`เหรียญ ${e.purchased} / โบนัส ${e.bonus}`}function Jn(e){return e?String(e):""}function gc(){const e=P(),t=e.signup,n=e.checkin,a=e.firstTopUp;return`
-    <section class="base-promo-section">
-      <h2 class="admin-section-title">โปรพื้นฐาน</h2>
+    <section class="base-promo-section promo-admin__section">
+      <h2 class="admin-section-title">โปรพื้นฐานของระบบ (ปิดหรือเปิดได้)</h2>
       <div class="base-promo-grid">
-        <article class="promo-form-card">
-          <div class="base-promo-head">
+        <article class="promo-form-card promo-admin-card">
+          <div class="promo-admin-card__top">
             <h3>โบนัสสมัครสมาชิก</h3>
-            <p class="promo-status${t.enabled?" is-on":""}">${t.enabled?"กำลังใช้":"ปิดอยู่"}</p>
+            <p class="promo-status${t.enabled?" is-on":""}">${t.enabled?"เปิดอยู่":"ปิดอยู่"}</p>
           </div>
           <p class="muted-note">สมาชิกใหม่ได้รับเหรียญโบนัสเมื่อสมัครสำเร็จ</p>
           <form class="auth-form" data-base-form="signup" novalidate>
@@ -779,16 +779,16 @@
               ${$("เว้นว่างไว้ถ้าไม่กำหนดวันหมดอายุ")}
               <input id="base-signup-expiry" name="bonusExpiryDays" type="number" min="1" step="1" placeholder="ไม่บังคับ" value="${l(Jn(t.bonusExpiryDays))}" />
             </div>
-            <div class="admin-save-row">
+            <div class="admin-save-row promo-card__actions">
               <button class="btn btn-primary" type="submit">บันทึก</button>
               <button class="btn btn-ghost" type="button" data-base-toggle="signup" data-enabled="${t.enabled?"1":"0"}">${t.enabled?"ปิดโปร":"เปิดโปร"}</button>
             </div>
           </form>
         </article>
-        <article class="promo-form-card">
-          <div class="base-promo-head">
+        <article class="promo-form-card promo-admin-card">
+          <div class="promo-admin-card__top">
             <h3>เช็คอินรายวัน</h3>
-            <p class="promo-status${n.enabled?" is-on":""}">${n.enabled?"กำลังใช้":"ปิดอยู่"}</p>
+            <p class="promo-status${n.enabled?" is-on":""}">${n.enabled?"เปิดอยู่":"ปิดอยู่"}</p>
           </div>
           <p class="muted-note">เช็คอินวันละครั้ง รับกุญแจเงิน ไม่ใช่เหรียญ กุญแจใช้ปลดล็อกตอนไม่ได้</p>
           <form class="auth-form" data-base-form="checkin" novalidate>
@@ -810,16 +810,16 @@
               <input id="base-checkin-coins" name="coins" type="number" min="1" step="1" required value="${l(String(n.coins||7))}" />
               ${h("coins")}
             </div>
-            <div class="admin-save-row">
+            <div class="admin-save-row promo-card__actions">
               <button class="btn btn-primary" type="submit">บันทึก</button>
               <button class="btn btn-ghost" type="button" data-base-toggle="checkin" data-enabled="${n.enabled?"1":"0"}">${n.enabled?"ปิดโปร":"เปิดโปร"}</button>
             </div>
           </form>
         </article>
-        <article class="promo-form-card">
-          <div class="base-promo-head">
+        <article class="promo-form-card promo-admin-card">
+          <div class="promo-admin-card__top">
             <h3>โบนัสเติมครั้งแรก</h3>
-            <p class="promo-status${a.enabled?" is-on":""}">${a.enabled?"กำลังใช้":"ปิดอยู่"}</p>
+            <p class="promo-status${a.enabled?" is-on":""}">${a.enabled?"เปิดอยู่":"ปิดอยู่"}</p>
           </div>
           <p class="muted-note">คิดเป็นเปอร์เซ็นต์ของจำนวนที่จ่าย แล้วบวกเพิ่มจากเหรียญเพิ่มของแพ็กนี้และโปรตามเทศกาล (ปัดขึ้น)</p>
           <form class="auth-form" data-base-form="firstTopUp" novalidate>
@@ -834,7 +834,7 @@
               ${$("เว้นว่างไว้ถ้าไม่กำหนดวันหมดอายุ")}
               <input id="base-first-expiry" name="bonusExpiryDays" type="number" min="1" step="1" placeholder="ไม่บังคับ" value="${l(Jn(a.bonusExpiryDays))}" />
             </div>
-            <div class="admin-save-row">
+            <div class="admin-save-row promo-card__actions">
               <button class="btn btn-primary" type="submit">บันทึก</button>
               <button class="btn btn-ghost" type="button" data-base-toggle="firstTopUp" data-enabled="${a.enabled?"1":"0"}">${a.enabled?"ปิดโปร":"เปิดโปร"}</button>
             </div>
@@ -846,13 +846,14 @@
     <section class="redeem-admin-section">
       <h2 class="admin-section-title">รหัสแลกเหรียญ</h2>
       <div class="promo-layout">
-        <div>${oe().map(a=>{const r=a.usedBy.length,o=a.expiresAt&&new Date(a.expiresAt)<=new Date,s=a.enabled?o?"หมดอายุ":r>=a.maxUses?"ใช้ครบแล้ว":"กำลังใช้":"ปิดอยู่",c=a.enabled&&!o&&r<a.maxUses;return`
-        <article class="promo-card" data-code-id="${l(a.id)}">
-          <div>
+        <div>${oe().map(a=>{const r=a.usedBy.length,o=a.expiresAt&&new Date(a.expiresAt)<=new Date,s=a.enabled?o?"หมดอายุ":r>=a.maxUses?"ใช้ครบแล้ว":"":"";return`
+        <article class="promo-card promo-admin-card" data-code-id="${l(a.id)}">
+          <div class="promo-admin-card__top">
             <h3>${l(a.code)}</h3>
-            <p class="promo-card__summary">${ac(a)}</p>
-            <p class="promo-status${c?" is-on":""}">${l(s)}</p>
+            <p class="promo-status${a.enabled?" is-on":""}">${a.enabled?"เปิดอยู่":"ปิดอยู่"}</p>
           </div>
+          <p class="promo-card__summary">${ac(a)}</p>
+          ${s?`<p class="promo-admin-card__phase">${l(s)}</p>`:""}
           <div class="promo-card__actions">
             <button type="button" class="btn btn-ghost" data-code-edit="${l(a.id)}">แก้ไข</button>
             <button type="button" class="btn btn-ghost" data-code-toggle="${l(a.id)}" data-enabled="${a.enabled?"1":"0"}">${a.enabled?"ปิดรหัส":"เปิดรหัส"}</button>
@@ -919,13 +920,14 @@
               <input id="${e}" class="event-form__file" type="file" accept="image/*" data-image-file />
               <input type="hidden" name="${r}" value="${l(a)}" data-image-value />
               <p class="field-error" data-image-error hidden></p>
-            </div>`}function vc(e=document,t={}){e.querySelectorAll("[data-image-upload]").forEach(n=>{if(n.dataset.bound)return;n.dataset.bound="1";const a=n.querySelector("[data-image-file]"),r=n.querySelector("[data-image-value]"),o=n.querySelector("[data-image-preview]"),s=n.querySelector("[data-image-clear]"),c=n.querySelector("label.event-form__upload"),i=n.querySelector("[data-image-error]"),d=p=>{i.textContent=p||"",i.hidden=!p},u=p=>{r.value=p,p?(o.src=p,o.hidden=!1):(o.removeAttribute("src"),o.hidden=!0),s.hidden=!p,c.textContent=p?"เปลี่ยนรูป":"อัปโหลดรูป"};a.addEventListener("change",async()=>{const p=a.files?.[0];if(!p)return;const m=await wt(p,t);if(a.value="",!m.ok){d(m.error);return}d(""),u(m.dataUrl)}),s.addEventListener("click",()=>{d(""),u("")})})}function $c(e=""){const t=e?pt(e):null,n=J().map(r=>{const o=rn(r),s=r.enabled?o?"กำลังใช้":"นอกช่วงเวลา":"ปิดอยู่";return`
-        <article class="promo-card" data-key-promo-id="${l(r.id)}">
-          <div>
+            </div>`}function vc(e=document,t={}){e.querySelectorAll("[data-image-upload]").forEach(n=>{if(n.dataset.bound)return;n.dataset.bound="1";const a=n.querySelector("[data-image-file]"),r=n.querySelector("[data-image-value]"),o=n.querySelector("[data-image-preview]"),s=n.querySelector("[data-image-clear]"),c=n.querySelector("label.event-form__upload"),i=n.querySelector("[data-image-error]"),d=p=>{i.textContent=p||"",i.hidden=!p},u=p=>{r.value=p,p?(o.src=p,o.hidden=!1):(o.removeAttribute("src"),o.hidden=!0),s.hidden=!p,c.textContent=p?"เปลี่ยนรูป":"อัปโหลดรูป"};a.addEventListener("change",async()=>{const p=a.files?.[0];if(!p)return;const m=await wt(p,t);if(a.value="",!m.ok){d(m.error);return}d(""),u(m.dataUrl)}),s.addEventListener("click",()=>{d(""),u("")})})}function $c(e=""){const t=e?pt(e):null,n=J().map(r=>{const o=rn(r);return`
+        <article class="promo-card promo-admin-card" data-key-promo-id="${l(r.id)}">
+          <div class="promo-admin-card__top">
             <h3>${l(r.name)}</h3>
-            <p class="promo-card__summary">${yc(r)}</p>
-            <p class="promo-status${o&&r.enabled?" is-on":""}">${l(s)}</p>
+            <p class="promo-status${r.enabled?" is-on":""}">${r.enabled?"เปิดอยู่":"ปิดอยู่"}</p>
           </div>
+          <p class="promo-card__summary">${yc(r)}</p>
+          ${r.enabled&&!o?'<p class="promo-admin-card__phase">นอกช่วงเวลา</p>':""}
           <div class="promo-card__actions">
             <button type="button" class="btn btn-ghost" data-key-promo-edit="${l(r.id)}">แก้ไข</button>
             <button type="button" class="btn btn-ghost" data-key-promo-toggle="${l(r.id)}" data-enabled="${r.enabled?"1":"0"}">${r.enabled?"ปิดโปร":"เปิดโปร"}</button>
@@ -933,7 +935,7 @@
           </div>
         </article>
       `}).join("")||'<p class="empty-state">ยังไม่มีโปรแจกกุญแจ</p>',a=Ta.map(r=>`<option value="${l(r.id)}"${(t?t.keyStyle:"rainbow")===r.id?" selected":""}>${l(r.name)}</option>`).join("");return`
-    <section class="key-promo-admin-section">
+    <section class="key-promo-admin-section promo-admin__section">
       <h2 class="admin-section-title">โปรแจกกุญแจ</h2>
       <p class="muted-note">เช็คอินในช่วงโปรจะได้กุญแจพิเศษแทนกุญแจเงิน แลกได้ครั้งเดียวต่อสมาชิก เมื่อโปรหมด กุญแจที่ยังไม่แลกจะนับเป็นกุญแจเงิน</p>
       <div class="promo-layout">
@@ -1002,13 +1004,14 @@
         </article>
       </div>
     </section>
-  `}function Fe(e="",t="",n=""){const a=e?dt(e):null,r=de().map(i=>{const d=_a(i),u=i.enabled?d?"กำลังใช้":"นอกช่วงเวลา":"ปิดอยู่";return`
-        <article class="promo-card" data-promo-id="${l(i.id)}">
-          <div>
+  `}function Fe(e="",t="",n=""){const a=e?dt(e):null,r=de().map(i=>{const d=_a(i);return`
+        <article class="promo-card promo-admin-card" data-promo-id="${l(i.id)}">
+          <div class="promo-admin-card__top">
             <h3>${l(i.name)}</h3>
-            <p class="promo-card__summary">${nc(i)}</p>
-            <p class="promo-status${d&&i.enabled?" is-on":""}">${l(u)}</p>
+            <p class="promo-status${i.enabled?" is-on":""}">${i.enabled?"เปิดอยู่":"ปิดอยู่"}</p>
           </div>
+          <p class="promo-card__summary">${nc(i)}</p>
+          ${i.enabled&&!d?'<p class="promo-admin-card__phase">นอกช่วงเวลา</p>':""}
           <div class="promo-card__actions">
             <button type="button" class="btn btn-ghost" data-promo-edit="${l(i.id)}">แก้ไข</button>
             <button type="button" class="btn btn-ghost" data-promo-toggle="${l(i.id)}" data-enabled="${i.enabled?"1":"0"}">${i.enabled?"ปิดโปร":"เปิดโปร"}</button>
@@ -1016,11 +1019,11 @@
           </div>
         </article>
       `}).join("")||'<p class="empty-state">ยังไม่มีโปรโมชัน</p>',o=a&&a.packageIds!=="all"?a.packageIds:[],s=!a||a.packageIds==="all",c=De.map(i=>{const d=s||o.includes(i.id);return`<label class="check-label"><input type="checkbox" name="packageIds" value="${l(i.id)}" ${d?"checked":""} /> ${l(rc(i))}</label>`}).join("");return`
+    <div class="promo-admin">
     <p class="proto-note">ตั้งโปรพื้นฐาน โปรแจกกุญแจ โปรตามเทศกาล และรหัสแลกเหรียญได้ที่หน้านี้</p>
     ${gc()}
-    ${$c(n)}
-    <section class="festival-promo-section">
-      <h2 class="admin-section-title">โปรตามเทศกาล</h2>
+    <section class="festival-promo-section promo-admin__section">
+      <h2 class="admin-section-title">โปรเติมเหรียญ</h2>
       <p class="muted-note">โปรนี้จะบวกเพิ่มจากเหรียญเพิ่มของแพ็กนี้ โดยคิดจากจำนวนที่จ่ายและปัดขึ้น</p>
       <div class="promo-layout">
       <div>
@@ -1091,8 +1094,10 @@
         </form>
       </section>
       </div>
+      ${bc(t)}
     </section>
-    ${bc(t)}
+    ${$c(n)}
+    </div>
   `}function kc(e){const t=new FormData(e),a=t.get("allPackages")==="on"?"all":t.getAll("packageIds");return{id:String(t.get("id")||"").trim()||void 0,name:t.get("name"),packageIds:a,bonusType:t.get("bonusType"),bonusValue:t.get("bonusValue"),startAt:te(t,"startAt"),endAt:te(t,"endAt"),enabled:t.get("enabled")==="on",firstTopUpOnly:t.get("firstTopUpOnly")==="on",bonusExpiryDays:t.get("bonusExpiryDays"),image:String(t.get("image")||"")}}function He(){vc(document,{maxSide:1200,maxChars:4e5});const e=document.querySelector("[data-promo-form]"),t=document.querySelector("[data-all-packages]"),n=document.querySelector("[data-pack-options]");if(t&&n){const o=()=>{n.querySelectorAll("input[name=packageIds]").forEach(s=>{s.disabled=t.checked,t.checked&&(s.checked=!0)})};t.addEventListener("change",o),o()}e&&e.addEventListener("submit",o=>{o.preventDefault();const s=kc(e),c=s.id?dt(s.id):null;let i;try{i=Sa(s),i.ok&&i.promo.image&&i.promo.image!==(c?.image||"")&&Bn(i.promo.id,i.promo.image)}catch{A(e,{form:K});return}if(!i.ok){A(e,i.errors);return}g("/admin?tab=promos")}),document.querySelectorAll("[data-promo-edit]").forEach(o=>{o.addEventListener("click",()=>{const s=document.querySelector(".admin-page");if(!s)return;const c=s.querySelector(".admin-tabs")?.outerHTML||"",i=s.querySelector(".page-title")?.outerHTML||"";s.innerHTML=`${i}${c}${Fe(o.dataset.promoEdit,"","")}`,He(),ke(s),C(s),s.querySelector("#promo-form-title")?.scrollIntoView({behavior:"smooth",block:"start"})})}),document.querySelector("[data-promo-cancel]")?.addEventListener("click",()=>g("/admin?tab=promos")),document.querySelectorAll("[data-promo-toggle]").forEach(o=>{o.addEventListener("click",()=>{const s=o.dataset.enabled!=="1";Uo(o.dataset.promoToggle,s),g("/admin?tab=promos")})}),document.querySelectorAll("[data-promo-delete]").forEach(o=>{o.addEventListener("click",()=>{confirm("ลบโปรโมชันนี้หรือไม่?")&&(Po(o.dataset.promoDelete),g("/admin?tab=promos"))})}),document.querySelectorAll("[data-base-form]").forEach(o=>{o.addEventListener("submit",s=>{s.preventDefault();const c=o.dataset.baseForm,i=new FormData(o),d={enabled:P()[c]?.enabled!==!1,coins:i.get("coins"),keysPerDay:i.get("keysPerDay"),keysRequired:i.get("keysRequired")||i.get("keysPerCoin"),coins:i.get("coins"),bonusValue:i.get("bonusValue"),bonusExpiryDays:i.get("bonusExpiryDays")},u=Ho(c,d);if(!u.ok){A(o,u.errors);return}g("/admin?tab=promos")})}),document.querySelectorAll("[data-base-toggle]").forEach(o=>{o.addEventListener("click",()=>{jo(o.dataset.baseToggle,o.dataset.enabled!=="1"),g("/admin?tab=promos")})});const a=document.querySelector("[data-code-form]");a&&a.addEventListener("submit",o=>{o.preventDefault();const s=new FormData(a),c=Ia({id:String(s.get("id")||"").trim()||void 0,code:s.get("code"),coins:s.get("coins"),maxUses:s.get("maxUses"),expiresAt:te(s,"expiresAt")||null,bonusExpiryDays:s.get("bonusExpiryDays"),enabled:s.get("enabled")==="on"});if(!c.ok){A(a,c.errors);return}g("/admin?tab=promos")}),document.querySelectorAll("[data-code-edit]").forEach(o=>{o.addEventListener("click",()=>{const s=document.querySelector(".admin-page");if(!s)return;const c=s.querySelector(".admin-tabs")?.outerHTML||"",i=s.querySelector(".page-title")?.outerHTML||"";s.innerHTML=`${i}${c}${Fe("",o.dataset.codeEdit,"")}`,He(),ke(s),C(s),s.querySelector("#code-form-title")?.scrollIntoView({behavior:"smooth",block:"start"})})}),document.querySelector("[data-code-cancel]")?.addEventListener("click",()=>g("/admin?tab=promos")),document.querySelectorAll("[data-code-toggle]").forEach(o=>{o.addEventListener("click",()=>{Zo(o.dataset.codeToggle,o.dataset.enabled!=="1"),g("/admin?tab=promos")})}),document.querySelectorAll("[data-code-delete]").forEach(o=>{o.addEventListener("click",()=>{confirm("ลบรหัสนี้หรือไม่?")&&(Jo(o.dataset.codeDelete),g("/admin?tab=promos"))})});const r=document.querySelector("[data-key-promo-form]");r&&r.addEventListener("submit",o=>{o.preventDefault();const s=new FormData(r),c=String(s.get("id")||"").trim()||void 0,i=c?pt(c):null;let d;try{d=Ua({id:c,name:s.get("name"),keyName:s.get("keyName"),keyStyle:s.get("keyStyle"),keyImage:String(s.get("keyImage")||""),keysRequired:s.get("keysRequired"),coins:s.get("coins"),startAt:te(s,"startAt"),endAt:te(s,"endAt"),enabled:s.get("enabled")==="on"}),d.ok&&d.promo.keyImage&&d.promo.keyImage!==(i?.keyImage||"")&&Bn(d.promo.id,d.promo.keyImage)}catch{A(r,{form:K});return}if(!d.ok){A(r,d.errors);return}g("/admin?tab=promos")}),document.querySelectorAll("[data-key-promo-edit]").forEach(o=>{o.addEventListener("click",()=>{const s=document.querySelector(".admin-page");if(!s)return;const c=s.querySelector(".admin-tabs")?.outerHTML||"",i=s.querySelector(".page-title")?.outerHTML||"";s.innerHTML=`${i}${c}${Fe("","",o.dataset.keyPromoEdit)}`,He(),ke(s),C(s),s.querySelector("#key-promo-form-title")?.scrollIntoView({behavior:"smooth",block:"start"})})}),document.querySelector("[data-key-promo-cancel]")?.addEventListener("click",()=>g("/admin?tab=promos")),document.querySelectorAll("[data-key-promo-toggle]").forEach(o=>{o.addEventListener("click",()=>{ts(o.dataset.keyPromoToggle,o.dataset.enabled!=="1"),g("/admin?tab=promos")})}),document.querySelectorAll("[data-key-promo-delete]").forEach(o=>{o.addEventListener("click",()=>{confirm("ลบโปรแจกกุญแจนี้หรือไม่?")&&(es(o.dataset.keyPromoDelete),g("/admin?tab=promos"))})})}function wc(){B();const e=b(),t=yn();w({name:"login",next:"/"});let n;if(!e)n=`
       <p class="home-daily__note">เข้าสู่ระบบ<wbr>เพื่อ<wbr>เช็คอิน<wbr>รายวัน รับกุญแจเงิน</p>`;else if(!t.enabled)n='<p class="home-daily__note">เช็คอินรายวันปิดอยู่ตอนนี้</p>';else{const c=t.currentKeyPromo?t.currentKeyPromo.keyName:"กุญแจเงิน",i=t.canExchange?'<button class="btn btn-primary" type="button" data-exchange-keys>แลกรับเหรียญ</button>':"",d=(t.keyPromos||[]).filter(u=>u.promo.name!=="Happy new year").map(u=>{const p=Nn(u.promo),m=u.alreadyExchanged?'<button class="btn btn-ghost" type="button" disabled>แลกไปแล้ว</button>':u.canExchange?`<button class="btn btn-primary" type="button" data-exchange-promo="${l(u.promo.id)}">แลกเหรียญ</button>`:"";return`
         <div class="home-daily__promo" data-key-promo="${l(u.promo.id)}">
